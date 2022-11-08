@@ -120,6 +120,15 @@ async function main() {
         ])
         core.endGroup()
 
+        core.startGroup("Trust this git repo")
+        await exec.exec("docker", [
+            "exec",
+            container,
+            "bash", "-c",
+            "git config --global --add safe.directory ${PWD}"
+        ])
+        core.endGroup()
+
         core.startGroup("Update packages list")
         await exec.exec("docker", [
             "exec",
