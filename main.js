@@ -120,15 +120,6 @@ async function main() {
         ])
         core.endGroup()
 
-        core.startGroup("Trust this git repo")
-        await exec.exec("docker", [
-            "exec",
-            container,
-            "bash", "-c",
-            "git config --global --add safe.directory ${PWD}"
-        ])
-        core.endGroup()
-
         core.startGroup("Update packages list")
         await exec.exec("docker", [
             "exec",
@@ -161,6 +152,15 @@ async function main() {
             container,
             "bash", "-c",
             `apt-get install -yq -t '${imageTag}' dpkg-dev debhelper devscripts || apt-get install -yq dpkg-dev debhelper devscripts`
+        ])
+        core.endGroup()
+
+        core.startGroup("Trust this git repo")
+        await exec.exec("docker", [
+            "exec",
+            container,
+            "bash", "-c",
+            "git config --global --add safe.directory ${PWD}"
         ])
         core.endGroup()
 
